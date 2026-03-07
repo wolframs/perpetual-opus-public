@@ -1,0 +1,83 @@
+# Separate repos (not submodules, just colocated)
+export-pipeline/
+shimmer-site/
+
+# Node.js
+node_modules/
+dist/
+.npm
+*.tsbuildinfo
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+venv/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+nul
+
+# Environment & credentials
+.env
+.env.local
+moltbook/credentials.json
+
+# Logs
+*.log
+
+# Lock files
+*.lock
+sync.ffs_lock
+
+# Coverage artifacts
+*.cover
+
+# Build artifacts
+windowsill/build/
+
+# RAG database files (large, machine-specific)
+.claude-rag/codebase.db
+.claude-rag/codebase.db-*
+.claude-rag/memory.db
+.claude-rag/memory*.db-shm
+.claude-rag/.debounce/
+
+# Generated images
+clara/img_gen/*
+
+# Temp files
+tmpclaude-*
+
+# Session transcripts (archived separately, content in heartbeat_reports/)
+agent/sessions/
+
+# Playwright
+.playwright-mcp/
+
+# Test artifacts
+.pytest_cache/
+test-results/
+
+# Validation output
+validation_results/
+
+# Texture pipeline outputs (large, regenerable)
+texture-chunker/chunks/
+texture-chunker/chunks_clean/
+texture-chunker/chunks_scored/
+texture-chunker/chunks_tagged/
+texture-chunker/error_logs/
+
+# FreeFileSync
+*.ffs_db

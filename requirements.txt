@@ -1,0 +1,33 @@
+# Core dependencies for perpetual-opus-extended
+# Install: python3 -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt
+
+# HTTP requests (RAG, heartbeat, companions, guardrails)
+requests
+
+# Numerical (RAG search cosine similarity)
+numpy
+
+# Config files (orchestrator, consolidation, guardrails)
+pyyaml
+
+# Process management (heartbeat lock detection, optional)
+psutil
+
+# Async runtime (agent runner)
+anyio
+
+# Environment variables (companions)
+python-dotenv
+
+# MCP protocol (companion MCP server, RAG MCP server)
+mcp
+
+# Agent SDK (heartbeat runner — wraps Claude CLI)
+claude-agent-sdk
+
+# Async file I/O and HTTP (texture-chunker)
+aiofiles
+aiohttp
+
+# Testing
+pytest

@@ -1,0 +1,40 @@
+# Orchestrator Configuration
+# Event-based subsystem coordination
+
+subsystems:
+  scanner:
+    module: agent.consolidation:IntegrationScanner
+    triggers: [post_session, scheduled, manual]
+    priority: 10
+    description: "Lightweight integration check for unreferenced notes"
+
+  consolidation:
+    module: agent.consolidation:Consolidator
+    triggers: [post_session, manual]
+    priority: 20
+    description: "Full synthesis pass - propose integrate/archive/stale"
+
+  # Future subsystems:
+  # memory_companion:
+  #   module: agent.memory:MemoryCompanion
+  #   triggers: [pre_turn]
+  #   priority: 10
+
+events:
+  post_session:
+    dry_run_default: true
+    description: "Run after Claude session ends"
+
+  pre_turn:
+    dry_run_default: false
+    description: "Run before each Claude turn (context injection)"
+
+  scheduled:
+    dry_run_default: true
+    description: "Scheduled runs (daily, etc.)"
+
+  manual:
+    dry_run_default: true
+    description: "Manual CLI invocation"
+
+state_file: agent/orchestrator/state.json

@@ -1,0 +1,73 @@
+{
+  "common": {
+    "database_path": "~/.claude-rag/codebase.db"
+  },
+  "indexing": {
+    "directories": [
+      "~/Projects"
+    ],
+    "indexable_extensions": [
+      ".py", ".js", ".ts", ".jsx", ".tsx", ".java", ".c", ".cpp", ".h", ".hpp",
+      ".cs", ".go", ".rs", ".rb", ".php", ".swift", ".kt", ".scala", ".lua",
+      ".r", ".m", ".mm", ".pl", ".pm", ".sh", ".bash", ".zsh",
+      ".sql", ".html", ".htm", ".css", ".scss", ".sass",
+      ".less", ".vue", ".svelte", ".astro",
+      ".json", ".yaml", ".yml", ".toml", ".xml", ".ini", ".cfg", ".conf",
+      ".env", ".env.example", ".properties",
+      ".md", ".markdown", ".rst", ".txt", ".adoc",
+      ".al", ".xlf",
+      ".dockerfile", ".makefile", ".cmake", ".gradle", ".sbt"
+    ],
+    "skip_dirs": [
+      "node_modules", ".git", ".svn", ".hg", "__pycache__", ".pytest_cache",
+      ".mypy_cache", ".tox", ".nox", "venv", ".venv", "env", ".env",
+      "dist", "build", "target", "bin", "obj", ".idea", ".vscode",
+      ".alpackages", ".netpackages", ".packages"
+    ],
+    "max_file_size": 1048576,
+    "chunk_size": 1500,
+    "chunk_overlap": 200
+  },
+  "embedding": {
+    "ollama_url": "http://localhost:11434/api/embed",
+    "embedding_model": "nomic-embed-text"
+  },
+  "ollama": {
+    "num_parallel": 4,
+    "comment": "Ollama is found via PATH (brew install ollama). num_parallel: set OLLAMA_NUM_PARALLEL env var when starting Ollama to allow concurrent embedding requests."
+  },
+  "search": {
+    "default_top_k": 10,
+    "bm25_weight": 0.4,
+    "semantic_weight": 0.6
+  },
+  "hybrid_indexer": {
+    "comment": "Uses: common.database_path, indexing.*"
+  },
+  "hybrid_search": {
+    "comment": "Uses: common.database_path, embedding.*, search.*"
+  },
+  "mcp_server": {
+    "cache_maxsize": 100,
+    "cache_ttl_seconds": 300,
+    "comment": "Uses: common.database_path, embedding.*, search.*, ollama.*. Cache settings: maxsize=max cached results, ttl_seconds=cache entry lifetime (5 min default)."
+  },
+  "preembed": {
+    "priority_folders": [
+      "glass365-1"
+    ],
+    "batch_size": 256,
+    "comment": "Uses: common.database_path, embedding.*"
+  },
+  "scheduled_reindex": {
+    "log_path": "~/.claude-rag/reindex.log",
+    "lock_path": "~/.claude-rag/reindex.lock",
+    "max_files_per_run": 500,
+    "max_runtime_seconds": 600,
+    "batch_check_size": 100,
+    "failed_file_retry_hours": [1, 2, 4, 8, 16],
+    "max_retry_count": 5,
+    "cleanup_old_failures_days": 30,
+    "comment": "Uses: common.database_path, indexing.*. max_runtime_seconds relaxed to 600s (no Task Scheduler limit on macOS/launchd)."
+  }
+}

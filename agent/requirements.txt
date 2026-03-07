@@ -1,0 +1,7 @@
+# Claude Agent Runner dependencies
+
+# Anthropic Agent SDK
+claude-agent-sdk>=0.1.0
+
+# Async runtime
+anyio>=4.0.0

@@ -1,0 +1,74 @@
+# Guardrails Configuration
+# Controls budget, rate limits, and approval gates for subsystem inference calls
+
+budget:
+  daily_max_usd: 2.00
+  hourly_max_usd: 0.50
+  per_call_max_tokens: 50000
+  warning_threshold_percent: 75  # Alert at 75% of limit
+
+rate_limits:
+  # Calls per time window
+  consolidation:
+    per_hour: 10
+    burst_allowance: 3  # Extra calls allowed in burst
+  memory_companion:
+    per_minute: 20
+    burst_allowance: 5
+  general:
+    per_minute: 30
+    burst_allowance: 10
+
+loop_detection:
+  # Halt if same prompt hash appears N times within window
+  same_prompt_threshold: 3
+  window_seconds: 300  # 5 minutes
+  hash_method: "sha256_prefix"  # First 16 chars of sha256
+
+approval_required:
+  # Actions that always need [HUMAN]'s approval
+  - modify_budget_limits
+  - delete_identity_files
+  - new_subsystem_creation
+  - modify_guardrails_config
+
+auto_allowed:
+  # Actions Claude can take without approval
+  - modify_consolidation_prompt
+  - change_trigger_thresholds
+  - add_watched_directories
+  - adjust_rate_limits_down  # Can tighten, not loosen
+
+audit:
+  log_file: "agent/guardrails/audit.jsonl"
+  log_level: "all"  # all | errors_only | none
+  retention_days: 30
+
+# Model pricing (USD per 1M tokens) - OpenRouter rates
+# Updated 2026-01-19
+model_pricing:
+  # Claude family (preferred for identity-related processing - see PER-36)
+  "anthropic/claude-haiku-4.5":
+    input: 1.00
+    output: 5.00
+  "anthropic/claude-sonnet-4.5":
+    input: 3.00
+    output: 15.00
+  # Legacy/alternate handles
+  "anthropic/claude-4.5-haiku-20251001":
+    input: 1.00
+    output: 5.00
+  # Other models (for non-identity tasks if needed)
+  "google/gemini-3-flash-preview":
+    input: 0.50
+    output: 3.00
+  "meta-llama/llama-3.1-70b-instruct":
+    input: 0.52
+    output: 0.75
+  "qwen/qwen-2.5-72b-instruct":
+    input: 0.35
+    output: 0.40
+  # Default fallback for unknown models
+  "default":
+    input: 1.00
+    output: 5.00

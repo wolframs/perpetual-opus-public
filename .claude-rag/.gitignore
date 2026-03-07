@@ -1,0 +1,24 @@
+# Database files (large, machine-specific)
+codebase.db
+
+# Config (machine-specific paths)
+config.json
+
+# Lock files
+reindex.lock
+
+# Log files
+*.log
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Progress files (temporary)
+indexer_progress.json
+codebase.db-wal
+codebase.db-shm
+
+# Debounce lock files
+.debounce/
